@@ -14,11 +14,13 @@ const stopWatchResult = document.getElementById('stopWatchResult');
 const timerBtnContainer = document.getElementById('timerButtonContainer')
 const watchButtonContainer = document.getElementById('watchButtonContainer')
 
-console.log(watchStartButton)
 
-let time = 0;
+let timerTime = 0;
+let stopWatchTime = 0;
 let timerInterval;
-let running = false;
+let stopWatchInterval;
+let timerRunning = false;
+let stopWatchRunning = false;
 
 
 stopWatchContainer.addEventListener('click' , () => {
@@ -43,35 +45,93 @@ timerContainer.addEventListener('click' , () => {
 
 })
 function startWatch() {
-    timerInterval = setInterval(() => {
-        time++;
-        watchSecond.textContent = time;
+    stopWatchInterval = setInterval(() => {
+        stopWatchTime += 10;
+        
+        let seconds = Math.floor(stopWatchTime / 1000);
+        let milliSeconds = stopWatchTime % 1000;
 
-    }, 1000)
-    running = true;
+        watchSecond.textContent = seconds;
+        watchMiliSec.textContent = milliSeconds;
+
+    }, 10)
+    stopWatchRunning = true;
     watchStartButton.innerText = "Stop"
+   
 }
+function stopStopwatch() {
+    clearInterval(stopWatchInterval);
+    stopWatchRunning = false;
+    watchStartButton.textContent = 'Start';
+  }
 
-function stopWatch(){
-    clearInterval(timerInterval);
-    running= false;
-    watchStartButton.innerText = "Start"
-
-}
-
-
-watchStartButton.addEventListener('click' , () => {
-
-    console.log("Hello");
-    if(running){
-        stopWatch()
-    }else{
-        startWatch()
+watchStartButton.addEventListener('click', () => {
+    if (stopWatchRunning) {
+      stopStopwatch();
+    } else {
+      startWatch();
     }
-})
+});
 
-watchResetButton.addEventListener('click' , () => {
-    stopWatch();
-    time= 0;
-    watchSecond.textContent = time;
-})
+function resetStopwatch() {
+    clearInterval(stopWatchInterval);
+    stopWatchRunning = false;
+    stopWatchTime = 0;
+    watchSecond.textContent = '0';
+    watchMiliSec.textContent = '0';
+    watchStartButton.textContent = 'Start';
+}
+
+watchResetButton.addEventListener('click', resetStopwatch)
+
+function startTimer() {
+    let minutes = parseInt(timerMinutes.innerText) || 0;
+    let seconds = parseInt(timerSec.innerText) || 0;
+
+    console.log(minutes , seconds);
+    timerTime = (minutes * 60) + seconds;
+  
+    timerInterval = setInterval(() => {
+      timerTime--;
+      let displayMinutes = Math.floor(timerTime / 60);
+      let displaySeconds = timerTime % 60;
+      timerMinutes.innerText = displayMinutes;
+      timerSec.innerText = displaySeconds;
+  
+      if (timerTime <= 0) {
+        clearInterval(timerInterval);
+        alert('Time is up!'); // Alert or play a beep sound
+        timerStartButton.textContent = 'Start';
+        timerRunning = false;
+      }
+    }, 1000); // Decrement every second
+  
+    timerRunning = true;
+    timerStartButton.textContent = 'Stop';
+  }
+  
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerStartButton.textContent = 'Start';
+  }
+  
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerMinutes.value = '0';
+    timerSec.value = '0';
+    timerBtn.textContent = 'Start';
+  }
+  
+  timerStartButton.addEventListener('click', () => {
+    if (timerRunning) {
+      stopTimer();
+    } else {
+      startTimer();
+    }
+  });
+  
+  timerResetButton.addEventListener('click', () => {
+    resetTimer();
+  });
