@@ -20,38 +20,45 @@ body{
     border: 1px solid rgb(168, 166, 166);
     border-radius: 8px;
 }
-.timerButtonContainer , .watchButtonContainer , .top{
+.hidden{
+    display: none;
+}
+.flex{
+    display: flex;
+}
+.btns ,.top{
     height: 20%;
 }
-.timerResult{
-    height: 60%;
+.btns{
+    border-top: 1px solid gray;
     display: flex;
-    align-items: end;
-    padding-left: 20px;
-    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    
 }
-.timerResult p , .stopWatchResult p{
-    font-size: 60px;
+.timerBody , .stopWatchBody{
+    height: 60%;
+    padding: 20px;
+    align-items: end;
+}
+.reset{
+    margin-left: 10px;
+}
+.time{
+    font-size: 4rem;
     font-weight: 500;
 }
-.minute{
-    font-size: 32px;
-    color: #9ea0a3;
+.m{
+    color: rgb(138, 133, 133);
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin: 0px 10px 0px 5px;
 }
-.stopWatchResult p:last-child{
-    font-size: 40px;
-    font-weight: 400;
+.s{
+    font-size: 3rem;
 }
-.stopWatchResult{
-    height: 60%;
-    display: none;
-    align-items: end;
-    padding-left: 20px;
-    gap: 10px;
-}
-.top{
-    display: flex;
-}
+
+
 #timer , #stopWatch{
     width: 50%;
     text-align: center;
@@ -59,8 +66,8 @@ body{
     font-size: 20px;
     padding-bottom: 35px;
     cursor: pointer;
-    display: flex;
     gap: 5px;
+    display: flex;
     justify-content: center;
     
 }
@@ -84,12 +91,9 @@ body{
 }
 .timerButtonContainer , .watchButtonContainer{
     padding: 10px 20px;
-    display: flex;
     gap: 20px;
 }
-.watchButtonContainer{
-    display: none;
-}
+
 button{
     cursor: pointer;
 }
@@ -99,12 +103,11 @@ button{
 }
 #timerBtn , #watchBtn{
     position: relative;
-    display: flex;
     gap: 10px;
     align-items: center;
     justify-content: center;
     background-color: #0F69FF;
-    padding: 5px 20px;
+    padding: 15px 20px;
     font-size: 22px;
     color: #fff;
     border: none;

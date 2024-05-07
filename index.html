@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stop watch</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
-        <div class="top">
-            <p id="timer" class="border"><span><i class="fa-solid fa-clock" id="timerIcon"></i></span>Timer</p>
-            <p id="stopWatch"  ><span><i class="fa-solid fa-stopwatch"></i></span>Stop Watch</p>
+        <!-- HEADER -->
+        <div class="top flex">
+            <p id="timer" class="border"><span><i class="fa-solid fa-clock " id="timerIcon"></i></span>Timer</p>
+            <p id="stopWatch"><span><i class="fa-solid fa-stopwatch"></i></span>Stop Watch</p>
         </div>
-        <div id="timerResult" class="timerResult"><p id="timerMinutes">4</p>m<p id="timerSec">59</p>s</div>
-        <div id="stopWatchResult" class="stopWatchResult"><p><span id="watchSec">0</span>s<span id="watchMiliSec">00</span></p></div>
-        <div class="timerButtonContainer" id="timerButtonContainer">
-            <button id="timerBtn"><img src="./img/icons8-time-24.png" alt="">Start</button>
-            <button id="timerResetBtn">Reset</button>
+
+        <!-- TIMER BODY -->
+        <div id="timerBody" class="timerBody hidden">
+            <div id="t-min" class="time"></div>
+            <div id="t-m" class="hidden m">m</div>
+            <div id="t-sec" class="time"></div>
+            <div id="t-s" class="m">S</div>
         </div>
-        <div class="watchButtonContainer" id="watchButtonContainer">
-            <button id="watchBtn"><img src="./img/icons8-time-24.png" alt="">Start</button>
-            <button id="watchResetBtn">Reset</button>
+        <div class="timerButtonContainer hidden" id="timerButtonContainer">
+            
+        </div>
+
+        <!-- STOPWATCH -->
+        <div id="stopWatchBody" class="stopWatchBody flex">
+            <div id="stopwatch-minutes" class="hidden time"></div>
+            <div id="M" class="hidden m">m</div>
+            <div id="stopwatch-sec" class="time">0</div>
+            <div id="S" class="m">s</div>
+            <div id="stopwatch-miliSec" class="s">00</div>
+        </div>
+        <div class="btns">
+            <div id="timerBtns" class="hidden">
+
+                <button id="timerBtn" class="start flex"><img src="./img/icons8-time-24.png" alt="">Start</button>
+                <button id="timerResetBtn" class="reset">Reset</button>
+            </div>
+            <div id="stopwatchBtn" class="flex">
+
+                <button id="watchBtn" class="start flex"><img src="./img/icons8-time-24.png" alt="">Start</button>
+                <button id="watchResetBtn" class="reset">Reset</button>
+            </div>
         </div>
     </div>
 
 
     <script src="script.js"></script>
 </body>
+
 </html>
