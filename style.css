@@ -6,15 +6,17 @@ body{
     margin: 0;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 .container{
-    width: 600px;
-    height: 350px;
+    margin-top: 40px;
+    width: 700px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     border: 1px solid rgb(168, 166, 166);
@@ -48,7 +50,7 @@ body{
     font-size: 4rem;
     font-weight: 500;
 }
-.m{
+.m, input{
     color: rgb(138, 133, 133);
     font-size: 2.5rem;
     font-weight: 500;
@@ -71,7 +73,7 @@ body{
     justify-content: center;
     
 }
-#stopWatch:hover , #timer:hover{
+.font-color{
     color: #0F69FF;
 }
 .stopWatch{
@@ -80,7 +82,7 @@ body{
 .border{
     border-bottom: 3px solid #232A31;
 }
-#timerResetBtn , #watchResetBtn{
+#timerResetBtn , #watchResetBtn , #timeLap{
     font-weight: 600;
     padding: 5px 20px;
     font-size: 20px;
@@ -88,6 +90,24 @@ body{
     border: none;
     width: 160px;
     border-radius: 38px;
+}
+#timeLap{
+    background-color: yellowgreen;
+    color: #fff;
+    margin-left: 10px;
+}
+#timerResetBtn{
+    background: transparent;
+    border: 4px solid rgb(209, 208, 208);
+    color: #0F69FF;
+}
+#timerResetBtn:hover{
+    background-color:  #E0E4E9;
+    border: none;
+}
+#watchResetBtn:hover{
+    color: #939599;
+
 }
 .timerButtonContainer , .watchButtonContainer{
     padding: 10px 20px;
@@ -118,4 +138,20 @@ button{
 #timerBtn>span{
     position: absolute;
     left: 5px;
+}
+#displayTimeLap{
+    width: 700px;
+    
+}
+table{
+    width: 100%;
+
+}
+
+#displayTimeLap td{
+    padding: 15px 0;
+    border-bottom: 1px solid #d0d1d3;
+    text-align: center;
+    font-size: 18px;
+
 }

@@ -10,13 +10,17 @@ const timerIcon = document.getElementById('timerIcon'),
         stopwatchSec = document.getElementById('stopwatch-sec'),
         stopwatchMiliSec = document.getElementById('stopwatch-miliSec'),
         watchStartButton = document.getElementById('watchBtn'),
-        watchResetBtn = document.getElementById('watchResetBtn')
+        watchResetBtn = document.getElementById('watchResetBtn'),
+        timerMinutes = document.getElementById('t-min'),
+        timerSec = document.getElementById('t-sec'),
+        timerStartButton = document.getElementById('timerBtn'),
+        timerResetButton = document.getElementById('timerResetBtn'),
+        displayTimeLap = document.getElementById('displayTimeLap')
 
 
 let timerTime = 0;
 let stopWatchTime = 0;
 let timerInterval;
-let stopWatchInterval;
 let timerRunning = false;
 let stopWatchRunning = false;
 
@@ -24,6 +28,8 @@ let stopWatchRunning = false;
 stopWatchContainer.addEventListener('click', () => {
     timerContainer.classList.remove('border')
     stopWatchContainer.classList.add('border')
+    stopWatchContainer.classList.add('font-color')
+    timerContainer.classList.remove('font-color')
     timerIcon.classList.remove('fa-solid')
     timerIcon.classList.add('fa-regular')
     stopwatchBody.classList.remove('hidden')
@@ -34,11 +40,15 @@ stopWatchContainer.addEventListener('click', () => {
     stopwatchBtns.classList.add('flex')
     timerBtn.classList.remove('flex')
     timerBtn.classList.add('hidden')
+    displayTimeLap.classList.remove('hidden')
+    displayTimeLap.classList.add('flex')
     
-})
-timerContainer.addEventListener('click', () => {
+  })
+  timerContainer.addEventListener('click', () => {
     stopWatchContainer.classList.remove('border')
     timerContainer.classList.add('border')
+    stopWatchContainer.classList.remove('font-color')
+    timerContainer.classList.add('font-color')
     timerIcon.classList.remove('fa-regular')
     timerIcon.classList.add('fa-solid');
     stopwatchBody.classList.remove('flex')
@@ -49,7 +59,8 @@ timerContainer.addEventListener('click', () => {
     stopwatchBtns.classList.add('hidden')
     timerBtn.classList.remove('hidden')
     timerBtn.classList.add('flex')
-
+    displayTimeLap.classList.remove('flex')
+    displayTimeLap.classList.add('hidden')
 })
 
 let miliSec = 0, sec = 0, min = 0;
@@ -65,8 +76,7 @@ function startWatch() {
             stopwatchMiliSec.textContent = miliSec;
             stopwatchSec.textContent = sec;
         }
-        
-        if (sec === 2) {
+        if (sec === 59) {
             stopwatchMinutes.classList.remove('hidden')
             stopwatchM.classList.remove('hidden')
             sec = '00';
@@ -74,28 +84,21 @@ function startWatch() {
             stopwatchSec.textContent = sec;
             stopwatchMinutes.textContent = min;
         }
-
-       
-
     }, 10)
     stopWatchRunning = true;
     watchStartButton.innerText = "Stop"
-
-
 }
-function stopWatch() {
+function toggleWatch() {
+  if(stopWatchRunning){
     clearInterval(stopWatchInterval);
     stopWatchRunning = false;
     watchStartButton.textContent = 'Start';
+  }else{
+    startWatch()
+  }
 }
 
-watchStartButton.addEventListener('click', () => {
-    if (stopWatchRunning) {
-        stopWatch();
-    } else {
-        startWatch();
-    }
-});
+watchStartButton.addEventListener('click', toggleWatch);
 
 function resetStopwatch() {
     clearInterval(stopWatchInterval);
@@ -107,58 +110,110 @@ function resetStopwatch() {
     stopwatchMinutes.textContent = 0
     stopwatchMinutes.classList.add('hidden')
     stopwatchM.classList.add('hidden')
+    clearLapRows()
 }
 
 watchResetBtn.addEventListener('click', resetStopwatch)
 
-// function startTimer() {
-//     let minutes = parseInt(timerMinutes.innerText) || 0;
-//     let seconds = parseInt(timerSec.innerText) || 0;
+let lapCount = 0;
 
-//     console.log(minutes, seconds);
-//     timerTime = (minutes * 60) + seconds;
+function timeLap(){
+  lapCount++
+  let lapMin = min;
+  let lapSec = sec;
+  let lapMiliSec = miliSec;
+  
+  document.getElementById('timerTable').innerHTML += `
+            <tr class="lap">
+                <td>${lapCount}</td>
+                <td>${lapMin}:${lapSec}:${lapMiliSec}</td>
+                <td></td>
+            </tr>
 
-//     timerInterval = setInterval(() => {
-//         timerTime--;
-//         let displayMinutes = Math.floor(timerTime / 60);
-//         let displaySeconds = timerTime % 60;
-//         timerMinutes.innerText = displayMinutes;
-//         timerSec.innerText = displaySeconds;
+  `
+}
+function clearLapRows() {
+  const lapRows = document.querySelectorAll('.lap');
+  lapRows.forEach((row) => {
+      row.remove();
+  });
+}
 
-//         if (timerTime <= 0) {
-//             clearInterval(timerInterval);
-//             alert('Time is up!'); // Alert or play a beep sound
-//             timerStartButton.textContent = 'Start';
-//             timerRunning = false;
-//         }
-//     }, 1000); // Decrement every second
+// Timer FUnction STart 
 
-//     timerRunning = true;
-//     timerStartButton.textContent = 'Stop';
-// }
+function startTimer() {
+    let minutes = parseInt(timerMinutes.innerText) || 0;
+    let seconds = parseInt(timerSec.innerText) || 0;
 
-// function stopTimer() {
-//     clearInterval(timerInterval);
-//     timerRunning = false;
-//     timerStartButton.textContent = 'Start';
-// }
+    timerTime = (minutes * 60) + seconds;
 
-// function resetTimer() {
-//     clearInterval(timerInterval);
-//     timerRunning = false;
-//     timerMinutes.value = '0';
-//     timerSec.value = '0';
-//     timerBtn.textContent = 'Start';
-// }
+    timerInterval = setInterval(() => {
+        timerTime--;
+        let displayMinutes = Math.floor(timerTime / 60);
+        let displaySeconds = timerTime % 60;
+        timerMinutes.innerText = displayMinutes;
+        timerSec.innerText = displaySeconds;
 
-// timerStartButton.addEventListener('click', () => {
-//     if (timerRunning) {
-//         stopTimer();
-//     } else {
-//         startTimer();
-//     }
-// });
+        if (timerTime <= 0) {
+            clearInterval(timerInterval);
+            alert('Time is up!'); // Alert or play a beep sound
+            timerStartButton.textContent = 'Start';
+            timerRunning = false;
+        }
+    }, 1000); // Decrement every second
 
-// timerResetButton.addEventListener('click', () => {
-//     resetTimer();
-// });
+    timerRunning = true;
+    timerStartButton.textContent = 'Stop';
+}
+
+function toggleTimer() {
+  if(timerRunning){
+
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerStartButton.textContent = 'Start';
+  }else{
+    startTimer()
+  }
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    timerRunning =false;
+    timerStartButton.textContent = 'Start';
+    timerMinutes.innerText = "4";
+    timerSec.innerText = "59";
+}
+
+timerStartButton.addEventListener('click' , toggleTimer);
+
+timerResetButton.addEventListener('click', () => {
+    resetTimer();
+});
+function makeEditable(element) {
+  const currentText = element.innerText;
+  const input = document.createElement('input'); 
+  input.type = 'text';
+  input.value = currentText; 
+  input.size = currentText.length; 
+  input.className = 'editable'; 
+
+  element.innerHTML = ''; 
+  element.appendChild(input); 
+
+  input.focus(); 
+
+  input.addEventListener('blur', () => {
+      const newText = input.value;       element.innerHTML = newText; 
+  });
+
+  input.addEventListener('keyup', (event) => {
+      if (event.key === 'Enter') {
+          input.blur();
+      }
+  });
+}
+
+document.querySelectorAll('.editable').forEach((element) => {
+  element.addEventListener('click', () => makeEditable(element));
+});

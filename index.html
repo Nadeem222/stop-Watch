@@ -14,16 +14,16 @@
 <body>
     <div class="container">
         <!-- HEADER -->
-        <div class="top flex">
-            <p id="timer" class="border"><span><i class="fa-solid fa-clock " id="timerIcon"></i></span>Timer</p>
-            <p id="stopWatch"><span><i class="fa-solid fa-stopwatch"></i></span>Stop Watch</p>
+        <div class="top flex ">
+            <p id="timer" class=""><span><i class="fa-regular fa-clock " id="timerIcon"></i></span>Timer</p>
+            <p id="stopWatch" class="border font-color"><span><i class="fa-solid fa-stopwatch"></i></span>Stop Watch</p>
         </div>
 
         <!-- TIMER BODY -->
         <div id="timerBody" class="timerBody hidden">
-            <div id="t-min" class="time"></div>
-            <div id="t-m" class="hidden m">m</div>
-            <div id="t-sec" class="time"></div>
+            <div id="t-min" class="time editable">4</div>
+            <div id="t-m" class="m">m</div>
+            <div id="t-sec" class="time editable">59</div>
             <div id="t-s" class="m">S</div>
         </div>
         <div class="timerButtonContainer hidden" id="timerButtonContainer">
@@ -48,8 +48,19 @@
 
                 <button id="watchBtn" class="start flex"><img src="./img/icons8-time-24.png" alt="">Start</button>
                 <button id="watchResetBtn" class="reset">Reset</button>
+                <button id="timeLap" onclick="timeLap()">Lap</button>
             </div>
         </div>
+    </div>
+    <div id="displayTimeLap" class="flex">
+        <table id="timerTable">
+            <tr style="font-weight: 600;">
+                <td>Lap</td>
+                <td>Lap time</td>
+                <td>Total</td>
+            </tr>
+        </table>
+
     </div>
 
 
